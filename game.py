@@ -5,23 +5,27 @@ from fireball import *
 import time
 import os
 
+# --- Remove or replace the old code around line 10 ---
+# Instead of importing tty and termios, use this:
+
 def getchar():
-	"""Returns a single character from standard input""" """Function taken from Github : https://gist.github.com/jasonrdsouza/1901709"""
-	import tty, termios, sys
-	fd = sys.stdin.fileno()
-	old_settings = termios.tcgetattr(fd)
-	try:
-		tty.setraw(sys.stdin.fileno())
-		ch = sys.stdin.read(1)
-	finally:
-		termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-	return ch
+    import msvcrt
+    # Wait for a keypress and read the character
+    char = msvcrt.getch()
+    
+    # Windows reads keys as "bytes" (e.g., b'a'). 
+    # We decode it to a normal string so the rest of the game works.
+    try:
+        return char.decode('utf-8')
+    except UnicodeDecodeError:
+        return char  # Return raw bytes if it's a special arrow key
+
 
 
 def jump(P,B):#jumps the player
     key=getchar()#inputs the character
     if key=='a' or key=='A':
-        os.system('clear')
+        print('\033[H', end='')
         B.setScreen(P.getPositionX(),P.getPositionY()," ")#sets the location on the board with " "
         #check for walls and stairs
         if B.checkNotWall(P.getPositionX()-1,P.getPositionY()-1) and B.checkStairs(P.getPositionX()-1,P.getPositionY()-1,P) is False:            
@@ -30,7 +34,7 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -39,13 +43,13 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
         if B.checkNotWall(P.getPositionX()+1,P.getPositionY()-1) and B.checkStairs(P.getPositionX()+1,P.getPositionY()-1,P) is False:            
@@ -53,14 +57,14 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
 
             P.setPos(P.getPositionX()+2,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
 
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -69,25 +73,25 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
    
 
     if key=='w' or key=='W':#jumpimg straigth up
-        os.system('clear')
+        print('\033[H', end='')
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
         if B.checkNotWall(P.getPositionX()-1,P.getPositionY()) and B.checkStairs(P.getPositionX()-1,P.getPositionY(),P) is False:            
             P.setPos(P.getPositionX()-1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -96,13 +100,13 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
         if B.checkNotWall(P.getPositionX()+1,P.getPositionY()) and B.checkStairs(P.getPositionX()+1,P.getPositionY(),P) is False:            
@@ -110,14 +114,14 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
 
             P.setPos(P.getPositionX()+2,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
 
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -126,25 +130,25 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
         
         
     if key=='d' or key=='D':#jumping right
-        os.system('clear')
+        print('\033[H', end='')
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
         if B.checkNotWall(P.getPositionX()-1,P.getPositionY()+1) and B.checkStairs(P.getPositionX()-1,P.getPositionY()+1,P) is False:            
             P.setPos(P.getPositionX()-1,P.getPositionY()+1)
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -153,13 +157,13 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
         if B.checkNotWall(P.getPositionX()+1,P.getPositionY()+1) and B.checkStairs(P.getPositionX()+1,P.getPositionY()+1,P) is False:            
@@ -167,14 +171,14 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
 
             P.setPos(P.getPositionX()+2,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
 
             return 
         B.setScreen(P.getPositionX(),P.getPositionY()," ")
@@ -183,13 +187,13 @@ def jump(P,B):#jumps the player
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
         else :
             P.setPos(P.getPositionX()+1,P.getPositionY())
             B.assignPlayer(P.getPositionX(),P.getPositionY())
             B.printBoard()
             time.sleep(0.5)
-            os.system('clear')
+            print('\033[H', end='')
             return 
        
 
@@ -201,7 +205,7 @@ def move(P,B):#to move the player
         exit()
     elif key=='a' or key=='A':#to move to left
         if B.checkNotWall(x,y-1):
-            if P.getPositionX()%4==3:
+            if P.getPositionX()%4==3 or P.getPositionX()==1:
                 B.setScreen(x,y," ")
                 if B.checkCoin(x,y-1):
                     P.setScore(5)
@@ -209,7 +213,7 @@ def move(P,B):#to move the player
 
     elif key=='d' or key=='D':#to move to right
         if B.checkNotWall(x,y+1):
-            if P.getPositionX()%4==3:
+            if P.getPositionX()%4==3 or P.getPositionX()==1:
                 B.setScreen(x,y," ")
                 if B.checkCoin(x,y+1):
                     P.setScore(5)
@@ -248,15 +252,16 @@ def move(P,B):#to move the player
 
 
 def main():
-    os.system('clear')
-    name=raw_input("enter your name : ")#inputs the name
+    os.system('')
+    os.system('cls')
+    name=input("enter your name : ")#inputs the name
     B=Board()#creates board instance
-    os.system('clear')
+    os.system('cls')
     P=Player(name,B.getHeight()-2,1)#creates player instance
-    print "hi, "+P.getName()+", welcome to the game"
+    print("hi, "+P.getName()+", welcome to the game")
     print
     st= "The game starts in 5  seconds"
-    print st
+    print(st)
     time.sleep(5)
 
     while True:
@@ -266,7 +271,7 @@ def main():
         fireball=[]#creates list that will contain the fireball
         count=1
         while True:
-            os.system('clear')
+            print('\033[H', end='')
             B.assignPlayer(P.getPositionX(),P.getPositionY())
 
             #assigning position to donkey
@@ -362,19 +367,19 @@ def main():
  
             B.printBoard()
             if P.getLives()<=0:#checks the number of lives left
-                os.system('clear')
-                print "game over"
+                os.system('cls')
+                print("game over")
                 temp=getchar()
                 exit()
 
             P.printDetails()
-            print "Enter Move : "
+            print("Enter Move : ")
             levelflag=move(P,B)
             if levelflag==True:#if the queen is rescued?
                 P.setScore(50)
                 P.setLevel(1)
-                os.system('clear')
-                print "Level Up......"
+                os.system('cls')
+                print("Level Up......")
                 break
 
 

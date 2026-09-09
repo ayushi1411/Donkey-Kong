@@ -63,7 +63,7 @@ class Board:
 
     def printBoard(self): #prints the board
         for i in range(0,self.getHeight()):
-            print ''.join(self.__screen[i])
+            print(''.join(self.__screen[i]))
 
     def setFloor(self): #sets the floor on each level
         for i in range(4,self.getHeight()-1,4):

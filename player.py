@@ -30,10 +30,10 @@ class Player(Person):#player class inherits the person class
         self.__level+=level
 
     def printDetails(self):#displays the details of the player
-        print "PLAYER NAME : "+str(self.getName())
-        print "SCORE : " + str(self.getScore())
-        print "LIVES : " + str(self.getLives())
-        print "LEVEL : " + str(self.getLevel())
+        print("PLAYER NAME : "+str(self.getName()))
+        print("SCORE : " + str(self.getScore()))
+        print("LIVES : " + str(self.getLives()))
+        print("LEVEL : " + str(self.getLevel()))
 
 if __name__=="__main__":
     main()
